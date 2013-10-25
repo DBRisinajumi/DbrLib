@@ -16,7 +16,7 @@ class DbrLib{
              {
                  case 'today' :
                    
-                     $criteria->addCondition("'$fieldname' = DATE(NOW())" );  // date is database date column field
+                     $criteria->addCondition("$fieldname = DATE(NOW())" );  // date is database date column field
                  
                  break;  
                  case 'yesterday' :
