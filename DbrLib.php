@@ -8,6 +8,115 @@
 
 class DbrLib{
     
+    public static function getRangeMenuArray($range = null){
+    
+    $date = new DateTime();
+    $yesterday = $date->sub(new DateInterval('P1D'));  
+    $date = new DateTime();
+    $lastmonth = $date->sub(new DateInterval('P1M'));  
+    $date = new DateTime();
+    $lastweek = $date->sub(new DateInterval('P7D')); 
+        
+    if (!isset($range)) $range = 'all';    
+    $aMenuRange[] = array(
+        'label'   => Yii::t('dbr_app', 'All'),
+        'itemOptions' => array('class' => 'nav-condensed'),
+        'url'     => Yii::app()->controller->createUrl(
+                'admin',
+                array(
+                      'range' => 'all' 
+                    )
+                ),
+        'active'  => ($range === 'all')
+    );
+$aMenuRange[] = array(
+        'label'   => Yii::t('dbr_app', 'Today').'('.$date->format('d/m/Y').')',
+     'itemOptions' => array('class' => 'nav-condensed'),
+        'url'     => Yii::app()->controller->createUrl(
+                'admin',
+                array(
+                      'range' => 'today' 
+                    )
+                ),
+        'active'  => ($range === 'today')
+    );
+   
+   
+ $aMenuRange[] = array(
+        'label'   =>   Yii::t('dbr_app', 'Yesterday').'('.$yesterday->format('d/m/Y').')',
+      'itemOptions' => array('class' => 'nav-condensed'),
+        'url'     => Yii::app()->controller->createUrl(
+                'admin',
+                array(
+                      'range' => 'yesterday' 
+                    )
+                ),
+     'active'  => ($range === 'yesterday')
+    );
+     $aMenuRange[] = array(
+        'label'   =>   Yii::t('dbr_app', 'This week').'('.(int)date('W').')',
+          'itemOptions' => array('class' => 'nav-condensed'),
+        'url'     => Yii::app()->controller->createUrl(
+                'admin',
+                array(
+                       'range' => 'thisweek' 
+                    )
+                ),
+     'active'  => ($range === 'thisweek')
+    );
+     
+     $aMenuRange[] = array(
+         'label'   =>   Yii::t('dbr_app', 'Last week').'('.(int)$lastweek->format('W').')',
+          'itemOptions' => array('class' => 'nav-condensed'),
+        'url'     => Yii::app()->controller->createUrl(
+                'admin',
+                array(
+                       'range' => 'lastweek' 
+                    )
+                ),
+     'active'  => ($range === 'lastweek')
+    ); 
+     
+      $aMenuRange[] = array(
+        'label'   =>   date('F'),
+           'itemOptions' => array('class' => 'nav-condensed'),
+        'url'     => Yii::app()->controller->createUrl(
+                'admin',
+                array(
+                       'range' => 'thismonth' 
+                    )
+                ),
+    'active'  => ($range === 'thismonth')
+    );
+      
+     $aMenuRange[] = array(
+         'label'   =>   $lastmonth->format('F'),
+          'itemOptions' => array('class' => 'nav-condensed'),
+        'url'     => Yii::app()->controller->createUrl(
+                'admin',
+                array(
+                       'range' => 'lastmonth' 
+                    )
+                ),
+     'active'  => ($range === 'lastmonth')
+    );  
+     
+     $aMenuRange[] = array(
+         'label'   =>   Yii::t('dbr_app', 'This year').'('.(int)(date('Y')).')',
+          'itemOptions' => array('class' => 'nav-condensed'),
+        'url'     => Yii::app()->controller->createUrl(
+                'admin',
+                array(
+                       'range' => 'thisyear' 
+                    )
+                ),
+     'active'  => ($range === 'thisyear')
+    );   
+     
+    return  $aMenuRange;
+    }
+
+
     public static function addRangeCriteria($criteria, $range, $fieldname)
     {
         
