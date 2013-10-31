@@ -140,7 +140,7 @@ $aMenuRange[] = array(
                  break;  
                  case 'lastweek' :
                    
-                     $criteria->addCondition("WEEK($fieldname) = WEEK(NOW()-1)AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
+                     $criteria->addCondition("WEEK($fieldname) = WEEK(DATE_SUB(DATE(NOW()), INTERVAL 7 DAY))AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
                  
                  break; 
                  case 'thismonth' :
@@ -150,7 +150,7 @@ $aMenuRange[] = array(
                  break; 
                  case 'lastmonth' :
                    
-                     $criteria->addCondition("MONTH($fieldname) = MONTH(NOW()-1) AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
+                     $criteria->addCondition("MONTH($fieldname) = MONTH(DATE_SUB(DATE(NOW()), INTERVAL 1 MONTH)) AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
                  
                  break;
                   case 'thisyear' :
