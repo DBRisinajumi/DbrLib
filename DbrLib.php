@@ -8,12 +8,73 @@
 
 class DbrLib{
     
+    public static function getRangeDate($range = 'all'){
+        
+        $result['from'] = '';
+        $result['to'] = '';
+        
+        switch ($range) {
+            
+            case 'today' :  $result['from'] = date('d/M/Y'); break;
+            case 'yesterday' :  
+                $yesterday = $date->sub(new DateInterval('P1D')); 
+                $result['from'] =  $yesterday->format('d/m/Y');
+            break;
+        
+           case 'thisweek' :  
+              
+                 $today = date('D'); //Or add your own date
+                 $start_of_week = date('d/m/Y');
+                 $end_of_week = date('d/m/Y');
+
+                 if($today != "Mon")     $start_of_week = date('d/m/Y', strtotime("last monday"));
+                 if($today != "Sun")     $end_of_week = date('d/m/Y', strtotime("next sunday"));
+
+
+                 $result['from'] =  $start_of_week;
+                 $result['to'] =  $end_of_week;
+                 
+            break;
+            
+            case 'lastweek' :  
+              
+                 $date = new DateTime();
+                 $lastweek = $date->sub(new DateInterval('P7D')); 
+                 $lastweek_day = $lastweek->format('D'); 
+                 $start_of_week = $lastweek->format('d/m/Y');
+                 $end_of_week =  $lastweek->format('d/m/Y');
+
+                 if($lastweek_day != "Mon")     $start_of_week = date('d/m/Y', strtotime("last monday",$lastweek->getTimestamp()));
+                 if($lastweek_day != "Sun")     $end_of_week = date('d/m/Y', strtotime("next sunday",$lastweek->getTimestamp()));
+
+
+                 $result['from'] =  $start_of_week;
+                 $result['to'] =  $end_of_week;
+                 
+            break;
+            
+             case 'thismonth' :  
+              
+                
+                 $result['from'] =  date('01/m/Y');
+                 $result['to'] =  date('t/m/Y');
+                 
+            break;
+            
+            
+            
+                
+        }
+        
+        return $result;
+        
+    }
+    
     public static function getRangeMenuArray($range = null){
     
     $date = new DateTime();
     $yesterday = $date->sub(new DateInterval('P1D'));  
-    $date = new DateTime();
-    $lastmonth = $date->sub(new DateInterval('P1M'));  
+    $lastmonth =   date('F', strtotime("last month"));
     $date = new DateTime();
     $lastweek = $date->sub(new DateInterval('P7D')); 
         
@@ -90,7 +151,7 @@ $aMenuRange[] = array(
     );
       
      $aMenuRange[] = array(
-         'label'   =>   $lastmonth->format('F'),
+         'label'   =>   $lastmonth,
           'itemOptions' => array('class' => 'nav-condensed'),
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
