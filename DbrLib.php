@@ -71,7 +71,7 @@ class DbrLib{
     }
     
     public static function getRangeMenuArray($range = null){
-    
+       
     $date = new DateTime();
     $yesterday = $date->sub(new DateInterval('P1D'));  
     $lastmonth =   date('F', strtotime("last month"));
@@ -91,7 +91,7 @@ class DbrLib{
         'active'  => ($range === 'all')
     );
 $aMenuRange[] = array(
-        'label'   => Yii::t('dbr_app', 'Today').'('.$date->format('d/m/Y').')',
+        'label'   => Yii::t('dbr_app', 'Today').'('.date('d/m/Y').')',
      'itemOptions' => array('class' => 'nav-condensed'),
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
