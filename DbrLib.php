@@ -196,12 +196,12 @@ $aMenuRange[] = array(
                  break;  
                  case 'thisweek' :
                    
-                     $criteria->addCondition("WEEK($fieldname) = WEEK(NOW()) AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
+                     $criteria->addCondition("WEEK($fieldname,1) = WEEK(NOW(),1) AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
                  
                  break;  
                  case 'lastweek' :
                    
-                     $criteria->addCondition("WEEK($fieldname) = WEEK(DATE_SUB(DATE(NOW()), INTERVAL 7 DAY))AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
+                     $criteria->addCondition("WEEK($fieldname,1) = WEEK(DATE_SUB(DATE(NOW()), INTERVAL 7 DAY),1)AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
                  
                  break; 
                  case 'thismonth' :
