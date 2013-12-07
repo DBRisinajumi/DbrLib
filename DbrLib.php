@@ -81,7 +81,6 @@ class DbrLib{
     if (!isset($range)) $range = 'all';    
     $aMenuRange[] = array(
         'label'   => Yii::t('dbr_app', 'All'),
-        'itemOptions' => array('class' => 'nav-condensed'),
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
@@ -92,7 +91,6 @@ class DbrLib{
     );
 $aMenuRange[] = array(
         'label'   => Yii::t('dbr_app', 'Today').'('.date('d/m/Y').')',
-     'itemOptions' => array('class' => 'nav-condensed'),
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
@@ -105,8 +103,7 @@ $aMenuRange[] = array(
    
  $aMenuRange[] = array(
         'label'   =>   Yii::t('dbr_app', 'Yesterday').'('.$yesterday->format('d/m/Y').')',
-      'itemOptions' => array('class' => 'nav-condensed'),
-        'url'     => Yii::app()->controller->createUrl(
+            'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
                       'range' => 'yesterday' 
@@ -116,8 +113,7 @@ $aMenuRange[] = array(
     );
      $aMenuRange[] = array(
         'label'   =>   Yii::t('dbr_app', 'This week').'('.(int)date('W').')',
-          'itemOptions' => array('class' => 'nav-condensed'),
-        'url'     => Yii::app()->controller->createUrl(
+         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
                        'range' => 'thisweek' 
@@ -128,8 +124,7 @@ $aMenuRange[] = array(
      
      $aMenuRange[] = array(
          'label'   =>   Yii::t('dbr_app', 'Last week').'('.(int)$lastweek->format('W').')',
-          'itemOptions' => array('class' => 'nav-condensed'),
-        'url'     => Yii::app()->controller->createUrl(
+         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
                        'range' => 'lastweek' 
@@ -140,7 +135,6 @@ $aMenuRange[] = array(
      
       $aMenuRange[] = array(
         'label'   =>   date('F'),
-           'itemOptions' => array('class' => 'nav-condensed'),
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
@@ -152,8 +146,7 @@ $aMenuRange[] = array(
       
      $aMenuRange[] = array(
          'label'   =>   $lastmonth,
-          'itemOptions' => array('class' => 'nav-condensed'),
-        'url'     => Yii::app()->controller->createUrl(
+         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
                        'range' => 'lastmonth' 
@@ -164,8 +157,7 @@ $aMenuRange[] = array(
      
      $aMenuRange[] = array(
          'label'   =>   Yii::t('dbr_app', 'This year').'('.(int)(date('Y')).')',
-          'itemOptions' => array('class' => 'nav-condensed'),
-        'url'     => Yii::app()->controller->createUrl(
+         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
                        'range' => 'thisyear' 
