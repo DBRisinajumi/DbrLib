@@ -108,7 +108,7 @@ class DbrLib{
         
     }
     
-    public static function getRangeMenuArray($range = null, $from, $to){
+    public static function getRangeMenuArray($range = null, $range_param){
     
     $aDates = DbrLib::getDates();    
         
@@ -133,8 +133,8 @@ $aMenuRange[] = array(
         'label'   => Yii::t('dbr_app', 'Today').'('.$aDates['cur_day'].')',
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
-                array(
-                      'range' => 'today' , "$from" => $aDates['cur_day'], "$to" => $aDates['cur_day']
+                array( 
+                      'range' => 'today' , "$range_param" => $aDates['cur_day'].' - '.$aDates['cur_day']
                     )
                 ),
         'active'  => ($range === 'today')
@@ -146,7 +146,7 @@ $aMenuRange[] = array(
             'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                      'range' => 'yesterday' ,"$from" => $aDates['prev_day'], "$to" => $aDates['prev_day']
+                      'range' => 'yesterday' ,"$range_param" => $aDates['prev_day'].' - '.$aDates['prev_day']
                     )
                 ),
      'active'  => ($range === 'yesterday')
@@ -156,7 +156,7 @@ $aMenuRange[] = array(
          'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'thisweek' ,"$from" => $aDates['cur_week_monday'], "$to" => $aDates['cur_week_sunday']
+                       'range' => 'thisweek' ,"$range_param" => $aDates['cur_week_monday'].' - '.$aDates['cur_week_sunday']
                     )
                 ),
      'active'  => ($range === 'thisweek')
@@ -167,7 +167,7 @@ $aMenuRange[] = array(
          'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'lastweek' ,"$from" => $aDates['last_week_monday'], "$to" => $aDates['last_week_sunday']
+                       'range' => 'lastweek' ,"$range_param" => $aDates['last_week_monday'].' - '.$aDates['last_week_sunday']
                     )
                 ),
      'active'  => ($range === 'lastweek')
@@ -178,7 +178,7 @@ $aMenuRange[] = array(
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'thismonth' ,"$from" =>  $aDates['cur_month_first_day'], "$to" => $aDates['cur_month_last_day']
+                       'range' => 'thismonth' ,"$range_param" =>  $aDates['cur_month_first_day'].' - '.$aDates['cur_month_last_day']
                     )
                 ),
     'active'  => ($range === 'thismonth')
@@ -189,7 +189,7 @@ $aMenuRange[] = array(
          'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'lastmonth' ,"$from" =>  $aDates['prev_month_first_day'], "$to" => $aDates['prev_month_last_day']
+                       'range' => 'lastmonth' ,"$range_param" =>  $aDates['prev_month_first_day'].' - '.$aDates['prev_month_last_day']
                     )
                 ),
      'active'  => ($range === 'lastmonth')
@@ -200,7 +200,7 @@ $aMenuRange[] = array(
          'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'thisyear' ,"$from" =>  $aDates['cur_year_first_day'], "$to" => $aDates['cur_year_last_day']
+                       'range' => 'thisyear' ,"$range_param" =>  $aDates['cur_year_first_day'].' - '.$aDates['cur_year_last_day']
                     )
                 ),
      'active'  => ($range === 'thisyear')
