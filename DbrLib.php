@@ -114,7 +114,7 @@ class DbrLib{
         
     $date = new DateTime();
     $yesterday = $date->sub(new DateInterval('P1D'));  
-    $lastmonth =   date('F', strtotime("last month"));
+    $lastmonth =  Yii::t('dbr_app',  date('F', strtotime("last month")));
     $date = new DateTime();
     $lastweek = $date->sub(new DateInterval('P7D')); 
         
@@ -174,7 +174,7 @@ $aMenuRange[] = array(
     ); 
      
       $aMenuRange[] = array(
-        'label'   =>   date('F'),
+        'label'   =>   Yii::t('dbr_app',date('F')),
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
