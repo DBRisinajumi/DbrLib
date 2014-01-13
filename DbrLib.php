@@ -8,6 +8,44 @@
 
 class DbrLib{
     
+    private static function getDates(){
+        
+        $sql =  "SELECT ".
+		"DATE_FORMAT(CURDATE(),'%Y-%m-%d') cur_day, ".
+		"DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL -1 Day), '%Y-%m-%d') prev_day, ".
+                 "DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL +1 Day), '%Y-%m-%d') next_day, ".  
+		"DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL -1 WEEK), '%Y-%m-%d') prev_seven_day, ".
+		"DATE_FORMAT(STR_TO_DATE(CONCAT(PERIOD_ADD(DATE_FORMAT(CURDATE(),'%Y%m'),-2),'01'),'%Y%m%d'), '%Y-%m-%d') three_months_first_day, ".
+		"DATE_FORMAT(STR_TO_DATE(CONCAT(PERIOD_ADD(DATE_FORMAT(CURDATE(),'%Y%m'),-1),'01'),'%Y%m%d'), '%Y-%m-%d') prev_month_first_day, ".
+		"DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL -1 WEEK), '%Y-%m-%d') prev_seven_day, ".
+		"DATE_FORMAT(LAST_DAY(  STR_TO_DATE(CONCAT(PERIOD_ADD(DATE_FORMAT(CURDATE(),'%Y%m'),-1),'01'),'%Y%m%d')   ), '%Y-%m-%d') prev_month_last_day, ".
+		"CONCAT( DATE_FORMAT(CURDATE(),'%Y'), '-01-01') cur_year_first_day, ".
+		"CONCAT(DATE_FORMAT(CURDATE(),'%Y'), '-12-31') cur_year_last_day, ".
+		"CONCAT(DATE_FORMAT(CURDATE(),'%Y-%m'), '-01') cur_month_first_day, ".
+		"DATE_FORMAT(LAST_DAY(CURDATE()), '%Y-%m-%d') cur_month_last_day ";
+        
+        $aDates = Yii::app()->db->createCommand($sql)->queryRow();
+
+	$aToday = getdate();
+	if ($aToday['wday'] == 0) $aToday['wday'] = 7; // fix sunday
+
+	$aDates['cur_week_monday'] = date('Y-m-d',mktime(0,0,0,$aToday['mon'],$aToday['mday']-$aToday['wday']+1,$aToday['year']));
+	$aDates['cur_week_sunday'] = date('Y-m-d',mktime(0,0,0,$aToday['mon'],$aToday['mday']-$aToday['wday']+7,$aToday['year']));
+        
+      	$aDates['last_week_monday'] = date('Y-m-d',mktime(0,0,0,$aToday['mon'],$aToday['mday']-$aToday['wday']+1-7,$aToday['year']));
+	$aDates['last_week_sunday'] = date('Y-m-d',mktime(0,0,0,$aToday['mon'],$aToday['mday']-$aToday['wday']+7-7,$aToday['year']));
+
+        $aDates['prev_month_first_day'] = date('Y-m-d',mktime(0,0,0,$aToday['mon']-1,1,$aToday['year']));    
+	$aDates['prev_month_last_day'] = date('Y-m-d',mktime(0,0,0,$aToday['mon'],0,$aToday['year']));
+
+	$aDates['this_month_name'] =  date('F');
+        $aDates['prev_month_name'] =  date('F', strtotime("last month"));
+        
+	return $aDates;
+        
+        
+    }
+
     public static function getRangeDate($range = 'all'){
         
         $result['from'] = '';
@@ -70,8 +108,10 @@ class DbrLib{
         
     }
     
-    public static function getRangeMenuArray($range = null){
-       
+    public static function getRangeMenuArray($range = null, $from, $to){
+    
+    $aDates = DbrLib::getDates();    
+        
     $date = new DateTime();
     $yesterday = $date->sub(new DateInterval('P1D'));  
     $lastmonth =   date('F', strtotime("last month"));
@@ -90,11 +130,11 @@ class DbrLib{
         'active'  => ($range === 'all')
     );
 $aMenuRange[] = array(
-        'label'   => Yii::t('dbr_app', 'Today').'('.date('d/m/Y').')',
+        'label'   => Yii::t('dbr_app', 'Today').'('.$aDates['cur_day'].')',
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                      'range' => 'today' 
+                      'range' => 'today' , "$from" => $aDates['cur_day'], "$to" => $aDates['cur_day']
                     )
                 ),
         'active'  => ($range === 'today')
@@ -102,11 +142,11 @@ $aMenuRange[] = array(
    
    
  $aMenuRange[] = array(
-        'label'   =>   Yii::t('dbr_app', 'Yesterday').'('.$yesterday->format('d/m/Y').')',
+        'label'   =>   Yii::t('dbr_app', 'Yesterday').'('.$aDates['prev_day'].')',
             'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                      'range' => 'yesterday' 
+                      'range' => 'yesterday' ,"$from" => $aDates['prev_day'], "$to" => $aDates['prev_day']
                     )
                 ),
      'active'  => ($range === 'yesterday')
@@ -116,7 +156,7 @@ $aMenuRange[] = array(
          'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'thisweek' 
+                       'range' => 'thisweek' ,"$from" => $aDates['cur_week_monday'], "$to" => $aDates['cur_week_sunday']
                     )
                 ),
      'active'  => ($range === 'thisweek')
@@ -127,7 +167,7 @@ $aMenuRange[] = array(
          'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'lastweek' 
+                       'range' => 'lastweek' ,"$from" => $aDates['last_week_monday'], "$to" => $aDates['last_week_sunday']
                     )
                 ),
      'active'  => ($range === 'lastweek')
@@ -138,7 +178,7 @@ $aMenuRange[] = array(
         'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'thismonth' 
+                       'range' => 'thismonth' ,"$from" =>  $aDates['cur_month_first_day'], "$to" => $aDates['cur_month_last_day']
                     )
                 ),
     'active'  => ($range === 'thismonth')
@@ -149,7 +189,7 @@ $aMenuRange[] = array(
          'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'lastmonth' 
+                       'range' => 'lastmonth' ,"$from" =>  $aDates['prev_month_first_day'], "$to" => $aDates['prev_month_last_day']
                     )
                 ),
      'active'  => ($range === 'lastmonth')
@@ -160,7 +200,7 @@ $aMenuRange[] = array(
          'url'     => Yii::app()->controller->createUrl(
                 'admin',
                 array(
-                       'range' => 'thisyear' 
+                       'range' => 'thisyear' ,"$from" =>  $aDates['cur_year_first_day'], "$to" => $aDates['cur_year_last_day']
                     )
                 ),
      'active'  => ($range === 'thisyear')
@@ -170,50 +210,7 @@ $aMenuRange[] = array(
     }
 
 
-    public static function addRangeCriteria($criteria, $range, $fieldname)
-    {
-        
-        
-            switch ($range)
-             {
-                 case 'today' :
-                   
-                     $criteria->addCondition("$fieldname = DATE(NOW())" );  // date is database date column field
-                 
-                 break;  
-                 case 'yesterday' :
-                   
-                     $criteria->addCondition("$fieldname = DATE_SUB(DATE(NOW()), INTERVAL 1 DAY)" );  // date is database date column field
-                 
-                 break;  
-                 case 'thisweek' :
-                   
-                     $criteria->addCondition("WEEK($fieldname,1) = WEEK(NOW(),1) AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
-                 
-                 break;  
-                 case 'lastweek' :
-                   
-                     $criteria->addCondition("WEEK($fieldname,1) = WEEK(DATE_SUB(DATE(NOW()), INTERVAL 7 DAY),1)AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
-                 
-                 break; 
-                 case 'thismonth' :
-                   
-                     $criteria->addCondition("MONTH($fieldname) = MONTH(NOW()) AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
-                 
-                 break; 
-                 case 'lastmonth' :
-                   
-                     $criteria->addCondition("MONTH($fieldname) = MONTH(DATE_SUB(DATE(NOW()), INTERVAL 1 MONTH)) AND YEAR($fieldname)= YEAR(NOW())" );  // date is database date column field
-                 
-                 break;
-                  case 'thisyear' :
-                   
-                     $criteria->addCondition("YEAR($fieldname) =  YEAR(NOW())" );  // date is database date column field
-                 
-                 break;
-             }
-        
-    }
+   
     
     public static function rand_string( $length ) {
 
