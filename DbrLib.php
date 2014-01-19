@@ -127,6 +127,7 @@ class DbrLib{
                       'range' => 'all' 
                     )
                 ),
+        'icon' => 'calendar',
         'active'  => ($range === 'all')
     );
 $aMenuRange[] = array(
