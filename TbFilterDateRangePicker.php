@@ -154,14 +154,14 @@ class TbFilterDateRangePicker extends TbDateRangePicker {
                     break;
                 case 'this_week':
                     $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'This week')] = array(
-                        new CJavaScriptExpression("moment().startOf('week').isoWeekday(1)"),
-                        new CJavaScriptExpression("moment().startOf('week').isoWeekday(1).add('days', 6)")
+                        new CJavaScriptExpression("moment().startOf('week')"),
+                        new CJavaScriptExpression("moment().endOf('week')")
                     );
                     break;
                 case 'last_week':
                     $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'Last week')] = array(
-                        new CJavaScriptExpression("moment().startOf('week').isoWeekday(1).subtract('days', 7)"),
-                        new CJavaScriptExpression("moment().startOf('week').isoWeekday(1).subtract('days', 1)")
+                        new CJavaScriptExpression("moment().startOf('week').subtract('days', 7)"),
+                        new CJavaScriptExpression("moment().endOf('week').subtract('days', 7)")
                     );
                     break;
                 case 'last7days':
