@@ -19,7 +19,7 @@ class TbFilterDateRangePicker extends TbDateRangePicker {
         $this->htmlOptions = array(
             'size' => 20,
             'class' => 'date20',
-            'title' => Yii::t('TbFilterDateRangePicker', 'Date from-to'));
+            'title' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Date from-to'));
 
 
         //callbach triger change input field
@@ -36,11 +36,11 @@ class TbFilterDateRangePicker extends TbDateRangePicker {
             'changeYear' => true,
             'format' => 'YYYY-MM-DD',
             'locale' => array(
-                'applyLabel' => Yii::t('TbFilterDateRangePicker', 'Applay'),
-                'cancelLabel' => Yii::t('TbFilterDateRangePicker', 'Cancel'),
-                'fromLabel' => Yii::t('TbFilterDateRangePicker', 'From'),
-                'toLabel' => Yii::t('TbFilterDateRangePicker', 'To'),
-                'customRangeLabel' => Yii::t('TbFilterDateRangePicker', 'Custom range'),
+                'applyLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Applay'),
+                'cancelLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Cancel'),
+                'fromLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'From'),
+                'toLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'To'),
+                'customRangeLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Custom range'),
             ),
         ));
         $this->setRanges();        
@@ -141,55 +141,55 @@ class TbFilterDateRangePicker extends TbDateRangePicker {
             
             switch ($range) {
                 case 'today':
-                    $this->options['ranges'][Yii::t('TbFilterDateRangePicker', 'Today')] = array(
+                    $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'Today')] = array(
                         new CJavaScriptExpression('moment()'),
                         new CJavaScriptExpression('moment()')
                     );
                     break;
                 case 'yesterday':
-                    $this->options['ranges'][Yii::t('TbFilterDateRangePicker', 'Yesterday')] = array(
+                    $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'Yesterday')] = array(
                         new CJavaScriptExpression("moment().subtract('days', 1)"),
                         new CJavaScriptExpression("moment().subtract('days', 1)")
                     );
                     break;
                 case 'this_week':
-                    $this->options['ranges'][Yii::t('TbFilterDateRangePicker', 'This week')] = array(
+                    $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'This week')] = array(
                         new CJavaScriptExpression("moment().startOf('week').isoWeekday(1)"),
                         new CJavaScriptExpression("moment().startOf('week').isoWeekday(1).add('days', 6)")
                     );
                     break;
                 case 'last_week':
-                    $this->options['ranges'][Yii::t('TbFilterDateRangePicker', 'Last week')] = array(
+                    $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'Last week')] = array(
                         new CJavaScriptExpression("moment().startOf('week').isoWeekday(1).subtract('days', 7)"),
                         new CJavaScriptExpression("moment().startOf('week').isoWeekday(1).subtract('days', 1)")
                     );
                     break;
                 case 'last7days':
-                    $this->options['ranges'][Yii::t('TbFilterDateRangePicker', 'Last 7 Days')] = array(
+                    $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'Last 7 Days')] = array(
                         new CJavaScriptExpression("moment().subtract('days', 6)"),
                         new CJavaScriptExpression("moment()")
                     );
                     break;
                 case 'last30days':
-                    $this->options['ranges'][Yii::t('TbFilterDateRangePicker', 'Last 30 Days')] = array(
+                    $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'Last 30 Days')] = array(
                         new CJavaScriptExpression("moment().subtract('days', 29)"),
                         new CJavaScriptExpression("moment()")
                     );
                     break;
                 case 'this_month':
-                    $this->options['ranges'][Yii::t('TbFilterDateRangePicker', 'This Month')] = array(
+                    $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'This Month')] = array(
                         new CJavaScriptExpression("moment().startOf('month')"),
                         new CJavaScriptExpression("moment().endOf('month')"),
                     );
                     break;
                 case 'last_month':
-                    $this->options['ranges'][Yii::t('TbFilterDateRangePicker', 'Last Month')] = array(
+                    $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'Last Month')] = array(
                     new CJavaScriptExpression("moment().subtract('month', 1).startOf('month')"),
                     new CJavaScriptExpression("moment().subtract('month', 1).endOf('month')"),
                     );
                     break;
                 case 'this_year':
-                    $this->options['ranges'][Yii::t('TbFilterDateRangePicker', 'This Year')] = array(
+                    $this->options['ranges'][Yii::t('DbrLib.TbFilterDateRangePicker', 'This Year')] = array(
                         new CJavaScriptExpression("moment().startOf('year')"),
                         new CJavaScriptExpression("moment().endOf('year')"),
                     );
