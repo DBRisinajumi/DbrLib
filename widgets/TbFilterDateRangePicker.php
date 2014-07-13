@@ -8,6 +8,10 @@
  */
 class TbFilterDateRangePicker extends TbDateRangePicker {
 
+    
+    public $format = 'DD.MM.YYYY';
+
+
     /**
      * ### .init()
      *
@@ -34,7 +38,7 @@ class TbFilterDateRangePicker extends TbDateRangePicker {
         $this->options = array_merge($this->options,array(
             'showButtonPanel' => true,
             'changeYear' => true,
-            'format' => 'YYYY-MM-DD',
+            'format' => $this->format,
             'locale' => array(
                 'applyLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Applay'),
                 'cancelLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Cancel'),
