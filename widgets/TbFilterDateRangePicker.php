@@ -9,7 +9,7 @@
 class TbFilterDateRangePicker extends TbDateRangePicker {
 
     
-    public $format = 'DD.MM.YYYY';
+    public $format = 'YYYY.MM.DD';
 
 
     /**
