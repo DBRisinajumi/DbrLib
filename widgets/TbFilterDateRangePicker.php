@@ -40,11 +40,14 @@ class TbFilterDateRangePicker extends TbDateRangePicker {
             'changeYear' => true,
             'format' => $this->format,
             'locale' => array(
-                'applyLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Applay'),
+                'applyLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Apply'),
                 'cancelLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Cancel'),
                 'fromLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'From'),
                 'toLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'To'),
                 'customRangeLabel' => Yii::t('DbrLib.TbFilterDateRangePicker', 'Custom range'),
+                'daysOfWeek' => array('Su', 'Mo','Tu','We', 'Th', 'Fr', 'Sa', ),
+                 'firstDay' => 1,
+                
             ),
         ));
         $this->setRanges();        
